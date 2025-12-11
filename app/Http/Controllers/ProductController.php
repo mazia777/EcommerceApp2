@@ -78,7 +78,12 @@ class ProductController extends Controller
 
         // Charge les relations
         $product->load('category');
-
+        /*
+        'image_brute' => $product->image,
+        'image_url' => $product->image_url,
+        'toutes_les_urls' => $product->all_image_urls,
+        /*/
+    
         // Produits similaires (même catégorie, max 4)
         $relatedProducts = Product::active()
             ->where('category_id', $product->category_id)

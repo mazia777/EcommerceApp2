@@ -244,7 +244,7 @@ class Product extends Model
             return asset('images/no-image.png');
         }
 
-        return asset('storage/' . $this->image);
+            return asset('storage/' . $this->image);
     }
 
     /**

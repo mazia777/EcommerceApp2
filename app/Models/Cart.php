@@ -19,7 +19,7 @@ class Cart extends Model
      * 
      * @var array<int, string>
      */
-    protected $fillable = [
+    protected $fillable = [//Attributs assignables en masse
         'user_id',
         'session_id',
     ];
@@ -49,7 +49,7 @@ class Cart extends Model
      * 
      * @return HasMany
      */
-    public function items(): HasMany
+    public function items(): HasMany//Relation One-to-Many
     {
         return $this->hasMany(CartItem::class);
     }
@@ -65,12 +65,20 @@ class Cart extends Model
      * 
      * @return float
      */
-    public function getTotalAttribute(): float
+    public function getTotalAttribute(): float//Calcule le montant total du panier
     {
-        return $this->items->sum(function ($item) {
-            return $item->subtotal;
+        return $this->items->sum(function ($item) {//Usage : {{ $cart->total }}//@return float
+            return $item->subtotal;//Calcule le montant total du panier//Usage : {{ $cart->total }}//@return float
         });
     }
+
+        public function getSubtotalAttribute()//Calcule le montant total du panier: float
+    {
+        return $this->items->sum(function ($item) {
+            return $item->quantity * $item->price;
+        });
+    }
+
 
     /**
      * Obtient le nombre total d'articles dans le panier
@@ -82,6 +90,7 @@ class Cart extends Model
     public function getTotalItemsAttribute(): int
     {
         return $this->items->sum('quantity');
+
     }
 
     /**
